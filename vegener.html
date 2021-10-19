@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Vigenere</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<div style="text-align: center">
+
+  <h2>Vigenere</h2>
+  <br>
+  <div>Text:</div>
+  <textarea id="decript"></textarea>
+  <div>Cheia:</div>
+  <input type="text" id="key">
+  <div>Text cifrat:</div>
+  <div>
+    <textarea class="mb-2" id="encript"></textarea>
+  </div>
+  <button onclick="encr_v()" class="btn btn-primary mb-4">Cifreaza</button>
+  <button onclick="decr_v()" class="btn btn-success mb-4">Descifreaza</button>
+</div>
+<script type="text/javascript">
+  let code_v = {
+    'a': 0,
+    'b': 1,
+    'c': 2,
+    'd': 3,
+    'e': 4,
+    'f': 5,
+    'g': 6,
+    'h': 7,
+    'i': 8,
+    'j': 9,
+    'k': 10,
+    'l': 11,
+    'm': 12,
+    'n': 13,
+    'o': 14,
+    'p': 15,
+    'q': 16,
+    'r': 17,
+    's': 18,
+    't': 19,
+    'u': 20,
+    'v': 21,
+    'w': 22,
+    'x': 23,
+    'y': 24,
+    'z': 25,
+  }
+  let codeArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', "j", 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+
+  function encr_v() {
+    let decript = document.querySelector("#decript").value
+    let encript = document.querySelector("#encript")
+    let key = document.querySelector("#key").value
+    let textKey = ""
+    for (let i = 0; i < (decript.length / key.length); i++)
+      textKey += key
+    let encr_text1 = ""
+    for (let i = 0; i < decript.length; i++)
+      if (decript[i] == " ")
+        encr_text1 += " "
+      else
+        encr_text1 += codeArr[(code_v[textKey[i]] + code_v [decript[i]]) % 26]
+    encript.value = encr_text1
+  }
+
+  function decr_v() {
+    let decript = document.querySelector("#decript")
+    let encript = document.querySelector("#encript").value
+    let key = document.querySelector("#key").value
+    let textKey = ""
+    for (let i = 0; i < (encript.length / key.length); i++)
+      textKey += key
+    let encr_text1 = ""
+    for (let i = 0; i < encript.length; i++) {
+      if (encript[i] == " ")
+        encr_text1 += " "
+      else {
+        let number = (code_v[encript[i]] - code_v[textKey[i]]) % 26;
+        encr_text1 += codeArr[(number < 0) ? number + 26 : number]
+      }
+    }
+    decript.value = encr_text1
+  }
+</script>
+
+</body>
+</html>

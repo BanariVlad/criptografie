@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cifre</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div style="text-align: center">
+  <h2>Cifrul Polibius</h2>
+  <div>
+    text:
+  </div>
+  <textarea id="decript_polib"></textarea>
+  <div>
+    Cheie:
+  </div>
+  <textarea class="mb-2" id="encript_polib"></textarea><br>
+  <button class="btn btn-primary" onclick="encr()">Cifreaza</button>
+  <button class="btn btn-success" onclick="decr()">Descifreaza</button>
+</div>
+
+<script type="text/javascript">
+  function encr() {
+    let decript_polib = document.querySelector("#decript_polib").value
+    let encript_polib = document.querySelector("#encript_polib")
+    let code = {
+      'a': '11',
+      'b': '12',
+      'c': '13',
+      'd': '14',
+      'e': '15',
+      'f': '21',
+      'g': '22',
+      'h': '23',
+      'i': '24',
+      'j': '25',
+      'k': '25',
+      'l': '31',
+      'm': '32',
+      'n': '33',
+      'o': '34',
+      'p': '35',
+      'q': '41',
+      'r': '42',
+      's': '43',
+      't': '44',
+      'u': '45',
+      'v': '51',
+      'w': '52',
+      'x': '53',
+      'y': '54',
+      'z': '55',
+      ' ': ' ',
+    }
+    let encr_text = ""
+    for (let i = 0; i < decript_polib.length; i++) {
+      encr_text += code[decript_polib[i]]
+    }
+    encript_polib.value = encr_text
+  }
+
+  function decr() {
+    let decript_polib = document.querySelector("#decript_polib")
+    let encript_polib = document.querySelector("#encript_polib").value
+    let code = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'k'], ['l', 'm', 'n', 'o', 'p'], ['q', 'r', 's', 't', 'u'], ['v', 'w', 'x', 'y', 'z']]
+    let encr_text = ""
+    for (let i = 0; i < encript_polib.length - 1; i++) {
+      if (encript_polib[i] != " ") {
+        let keys = [parseInt(encript_polib[i]) - 1, parseInt(encript_polib[i + 1]) - 1]
+        encr_text += code[keys[0]][keys[1]]
+        i++;
+      } else
+        encr_text += " "
+    }
+    decript_polib.value = encr_text
+  }
+</script>
+
+
+</body>
+</html>
+
+<style>
+    body {
+        text-align: center;
+    }
+</style>

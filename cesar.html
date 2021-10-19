@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cesar</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div>
+  <h1>Cifrul Cesar</h1>
+  <div>
+    Text:
+  </div>
+  <div>
+    <input type='text' id='message'>
+  </div>
+  <div>
+    cheia:
+  </div>
+  <div>
+    <input type='text' id='shift' value=''>
+  </div>
+  <div>Rezultat:</div>
+  <div>
+    <input type='text' id='cipher'>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary" onclick='encrypt()'>Cifreaza</button>
+    <button class="btn btn-success" onclick='decrypt()'>Descifreaza</button>
+  </div>
+</div>
+
+<script>
+  var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var space = '';
+
+  function shiftAlphabet(shift) {
+    var shiftedAlphabet = '';
+    for (var i = 0; i < alphabet.length; i++) {
+      //console.log(i, alphabet[i+shift]);
+      currentLetter = (alphabet[i + shift] === undefined) ? (alphabet[i + shift - alphabet.length]) : (alphabet[i + shift]);
+
+      shiftedAlphabet = shiftedAlphabet.concat(currentLetter);
+    }
+    return shiftedAlphabet;
+  }
+
+  function encrypt() {
+    var message = document.getElementById('message').value;
+    var shift = parseInt(document.getElementById('shift').value);
+    var shiftedAlphabet = shiftAlphabet(shift);
+    var encryptedMessage = '';
+    for (var i = 0; i < message.length; i++) {
+      var indexOfLetter = alphabet.indexOf(message[i].toUpperCase());
+      encryptedMessage = encryptedMessage.concat(shiftedAlphabet[indexOfLetter]);
+    }
+    document.getElementById('cipher').value = encryptedMessage.toLowerCase();
+  }
+
+  function decrypt() {
+    var message = document.getElementById('message').value;
+    var shift = parseInt(document.getElementById('shift').value);
+    var shiftedAlphabet = shiftAlphabet(shift);
+    var encryptedMessage = '';
+    for (var i = 0; i < message.length; i++) {
+      if (message[i] == ' ') {
+        encryptedMessage = encryptedMessage.concat(' ');
+        continue
+      }
+      ;
+      var indexOfLetter = shiftedAlphabet.indexOf(message[i].toUpperCase());
+      encryptedMessage = encryptedMessage.concat(alphabet[indexOfLetter]);
+    }
+    document.getElementById('cipher').value = encryptedMessage.toLowerCase();
+  }
+</script>
+
+
+</body>
+</html>
+
+<style>
+    body {
+        text-align: center;
+    }
+</style>

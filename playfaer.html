@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playfair</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container" style="text-align: center">
+  <h2>Cifrul Playfair</h2>
+  <div><p>Text:</p>
+    <textarea id="decript_playfair"></textarea>
+  </div>
+  <div class="mb-2">
+    <p>Text cifrat:</p>
+    <textarea id="ecript_playfair"></textarea>
+  </div>
+  <button onclick="encr()" class="btn btn-primary" type="button">Cifreaza</button>
+  <button onclick="decr()" class="btn btn-success" type="button">Descifreaza</button>
+</div>
+
+<script type="text/javascript">
+  let code = {
+    'a': '11',
+    'b': '12',
+    'c': '13',
+    'd': '14',
+    'e': '15',
+    'f': '21',
+    'g': '22',
+    'h': '23',
+    'i': '24',
+    'j': '24',
+    'k': '25',
+    'l': '31',
+    'm': '32',
+    'n': '33',
+    'o': '34',
+    'p': '35',
+    'q': '41',
+    'r': '42',
+    's': '43',
+    't': '44',
+    'u': '45',
+    'v': '51',
+    'w': '52',
+    'x': '53',
+    'y': '54',
+    'z': '55',
+  }
+  let codeArr = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'k'], ['l', 'm', 'n', 'o', 'p'], ['q', 'r', 's', 't', 'u'], ['v', 'w', 'x', 'y', 'z']]
+
+
+  function encr() {
+    let decript_playfair = document.querySelector("#decript_playfair").value
+    let ecript_playfair = document.querySelector("#ecript_playfair")
+    decript_playfair = decript_playfair.split(' ').join('')
+    if (decript_playfair.length % 2 != 0)
+      decript_playfair[decript_playfair.length] = "z";
+    let encr_text = ""
+    for (let i = 0; i < decript_playfair.length; i += 2) {
+      let code1 = code[decript_playfair[i]]
+      let code2 = code[decript_playfair[i + 1]]
+      let encr1 = ""
+      let encr2 = ""
+      if (code1[0] != code2[0] && code1[1] != code2[1]) {
+        encr2 = code1[0] + code2[1]
+        encr1 = code2[0] + code1[1]
+
+      } else {
+        if (code1[0] != code2[0]) {
+          encr2 = ((parseInt(code1[0]) + 1) % 6) + code1[1]
+          encr1 = ((parseInt(code2[0]) + 1) % 6) + code2[1]
+        } else {
+          encr2 = code1[0] + ((parseInt(code1[1]) + 1) % 6)
+          encr1 = code2[0] + ((parseInt(code2[1]) + 1) % 6)
+        }
+      }
+      let keys1 = [parseInt(encr1[0]) - 1, parseInt(encr1[1]) - 1]
+      let keys2 = [parseInt(encr2[0]) - 1, parseInt(encr2[1]) - 1]
+      encr_text += codeArr[keys2[0]][keys2[1]] + codeArr[keys1[0]][keys1[1]]
+    }
+    ecript_playfair.value = encr_text
+  }
+
+
+  function decr() {
+    let decript_playfair = document.querySelector("#decript_playfair")
+    let ecript_playfair = document.querySelector("#ecript_playfair").value
+    let encr_text = ""
+    for (let i = 0; i < ecript_playfair.length; i += 2) {
+      let code1 = code[ecript_playfair[i]]
+      let code2 = code[ecript_playfair[i + 1]]
+      let encr1 = ""
+      let encr2 = ""
+      if (code1[0] != code2[0] && code1[1] != code2[1]) {
+        encr2 = code1[0] + code2[1]
+        encr1 = code2[0] + code1[1]
+
+      } else {
+        if (code1[0] != code2[0]) {
+          encr2 = ((parseInt(code1[0]) - 1) % 6) + code1[1]
+          encr1 = ((parseInt(code2[0]) - 1) % 6) + code2[1]
+        } else {
+          encr2 = code1[0] + ((parseInt(code1[1]) - 1) % 6)
+          encr1 = code2[0] + ((parseInt(code2[1]) - 1) % 6)
+        }
+      }
+      let keys1 = [parseInt(encr1[0]) - 1, parseInt(encr1[1]) - 1]
+      let keys2 = [parseInt(encr2[0]) - 1, parseInt(encr2[1]) - 1]
+      console.log(i + " " + keys1 + ":" + keys2)
+      encr_text += codeArr[keys2[0]][keys2[1]] + codeArr[keys1[0]][keys1[1]]
+      decript_playfair.value = encr_text
+    }
+  }
+</script>
+</body>
+</html>
